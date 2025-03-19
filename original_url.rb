@@ -1,10 +1,20 @@
 # frozen_string_literal: true
 
-require 'net/https'
-require 'uri'
+class OriginalUrl < ApplicationService
+    require "net/https"
+    require "uri"
 
-class ShortenUrl
-    def original_url(original_url)
+    attr_accessor :short_url
+
+    def initialize(short_url)
+        @short_url = short_url
+    end
+
+    def perform
+        original_url(short_url)
+    end
+
+    def original_url(short_url)
         uri = URI.parse(short_url)
         response = Net::HTTP.get_response(uri)
 
@@ -16,7 +26,3 @@ class ShortenUrl
         uri.to_s
     end
 end
-
-short = OriginalUrl.new
-
-puts short.shortend_url("https://shorturl.at/QaKex")
