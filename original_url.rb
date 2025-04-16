@@ -19,7 +19,7 @@ class OriginalUrl < ApplicationService
         response = Net::HTTP.get_response(uri)
 
         while response.is_a? (Net::HTTPRedirection)
-            uri = URI.parse(response['location'])
+            uri = URI.parse(response["location"])
             response =  Net::HTTP.get_response(uri)
         end
 
